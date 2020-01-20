@@ -1,5 +1,6 @@
-package com.myshop.data.entities.base;
+package com.myshop.data.entities;
 
+import com.myshop.data.entities.base.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
