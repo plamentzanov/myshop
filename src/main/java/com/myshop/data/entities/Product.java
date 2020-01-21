@@ -7,9 +7,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_name", nullable = false)
     private Category category;
 
@@ -30,4 +32,7 @@ public class Product extends BaseEntity {
 
     @Column
     private String description;
+
+    @OneToMany(mappedBy = "product")
+    private List<Order> orders;
 }

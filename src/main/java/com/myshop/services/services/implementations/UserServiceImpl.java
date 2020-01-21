@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -50,7 +51,28 @@ public class UserServiceImpl implements UserService {
         } else {
             user.setAuthorities(new HashSet<>(Collections.singletonList(this.roleRepository.findByAuthority("USER"))));
         }
+
         user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
         return this.userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public User delete(UserServiceModel model) {
+        return null;
+    }
+
+    @Override
+    public User edit(UserServiceModel model) {
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUsersByRole(String role) {
+        return null;
     }
 }

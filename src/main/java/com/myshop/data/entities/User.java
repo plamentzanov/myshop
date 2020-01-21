@@ -1,14 +1,19 @@
 package com.myshop.data.entities;
 
 import com.myshop.data.entities.base.BaseEntity;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "users")
+@Getter
+@Setter
 @NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
@@ -21,6 +26,13 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> cart;
+
+    @Column(nullable = false)
+    @Min(5)
+    private String address;
+
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
     joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
@@ -32,34 +44,14 @@ public class User extends BaseEntity implements UserDetails {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public Set<Role> getAuthorities() {
         return authorities;
-    }
-
-    public void setAuthorities(Set<Role> authorities) {
-        this.authorities = authorities;
     }
 
     @Override

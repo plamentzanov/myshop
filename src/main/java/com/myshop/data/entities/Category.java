@@ -12,13 +12,13 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "categories")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Category extends BaseEntity {
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "category")
