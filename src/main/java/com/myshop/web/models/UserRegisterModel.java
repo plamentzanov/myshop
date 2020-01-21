@@ -1,4 +1,4 @@
-package com.myshop.controllers.models;
+package com.myshop.web.models;
 
 
 import lombok.Getter;
