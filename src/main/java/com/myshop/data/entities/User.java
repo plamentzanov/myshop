@@ -4,9 +4,7 @@ import com.myshop.data.entities.base.BaseEntity;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -14,15 +12,19 @@ import java.util.Set;
 @NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+    joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> authorities;
 
     @Override
@@ -61,23 +63,27 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
+    @Transient
     public boolean isAccountNonExpired() {
         return false;
     }
 
     @Override
+    @Transient
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
+    @Transient
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
+    @Transient
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
 }

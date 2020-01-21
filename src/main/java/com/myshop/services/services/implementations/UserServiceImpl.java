@@ -10,12 +10,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,13 +23,15 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, RoleRepository roleRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService, RoleRepository roleRepository, ModelMapper modelMapper, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
+        this.bCryptPasswordEncoder = encoder;
     }
 
     @Override
@@ -44,11 +45,12 @@ public class UserServiceImpl implements UserService {
         User user = this.modelMapper.map(model, User.class);
 
         if (this.userRepository.count() == 0) {
-            roleService.seedRoles();
+            this.roleService.seedRoles();
             user.setAuthorities(new HashSet<>(this.roleRepository.findAll()));
         } else {
             user.setAuthorities(new HashSet<>(Collections.singletonList(this.roleRepository.findByAuthority("USER"))));
         }
+        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
         return this.userRepository.saveAndFlush(user);
     }
 }
