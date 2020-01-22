@@ -1,10 +1,12 @@
 package com.myshop.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -16,6 +18,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/moderator/**").hasRole("MODERATOR")
                 .antMatchers("/", "/users/login","/users/register").anonymous()
                 .antMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 .anyRequest().authenticated()
@@ -28,5 +32,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .logout().logoutSuccessUrl("/users/login?logout").permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized");
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

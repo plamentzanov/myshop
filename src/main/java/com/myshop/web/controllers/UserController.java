@@ -2,7 +2,9 @@ package com.myshop.web.controllers;
 
 import com.myshop.services.models.UserServiceModel;
 import com.myshop.services.services.UserService;
+import com.myshop.web.models.UserLoginModel;
 import com.myshop.web.models.UserRegisterModel;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,8 +15,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -35,6 +39,14 @@ public class UserController extends BaseController {
     public String getLogin() {
         return "users/login";
     }
+
+    @GetMapping("/login?error")
+    @PreAuthorize("isAnonymous()")
+    public String getLoginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "users/login";
+    }
+
 
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
