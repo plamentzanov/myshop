@@ -75,4 +75,19 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsersByRole(String role) {
         return null;
     }
+
+    @Override
+    public boolean isUsernameFree(UserServiceModel model) {
+        User user = this.userRepository.findByUsername(model.getUsername());
+
+        return user == null;
+    }
+
+    @Override
+    public boolean isEmailFree(UserServiceModel model) {
+        User user = this.userRepository.findByEmail(model.getEmail());
+
+        return user == null;
+    }
+
 }

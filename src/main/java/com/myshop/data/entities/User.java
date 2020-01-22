@@ -30,7 +30,6 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Order> cart;
 
     @Column(nullable = false)
-    @Min(5)
     private String address;
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)

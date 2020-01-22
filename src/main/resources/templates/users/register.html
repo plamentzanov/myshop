@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyShop</title>
+    <link rel="stylesheet" href="/css/auth.css" type="text/css">
+    <link rel="shortcut icon" type="image/png" href="https://img.icons8.com/ios/50/000000/online-order.png"/>
+</head>
+<body>
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Register </h2>
+
+        <form th:method="post" th:action="@{/users/register}" th:object="${userRegisterModel}">
+                <input type="text" th:field="*{username}" id="login"  class="fadeIn second" name="login"
+                       placeholder="username">
+            <div th:if="${#fields.hasErrors('${userRegisterModel.username}')}">
+                <p th:each="err : ${#fields.errors('${userRegisterModel.username}')}" th:text="${err}">
+                </p>
+                </div>
+                <input type="password" th:field="*{password}" id="password" class="fadeIn third" name="login"
+                       placeholder="password">
+            <div th:if="${#fields.hasErrors('${userRegisterModel.password}')}">
+                <p th:each="err : ${#fields.errors('${userRegisterModel.password}')}" th:text="${err}">
+                </p>
+            </div>
+                <input type="password" th:field="*{confirmPassword}" id="confirmPassword" class="fadeIn third"
+                       name="login" placeholder="confirm password">
+            <div th:if="${#fields.hasErrors('${userRegisterModel.confirmPassword}')}">
+                <p th:each="err : ${#fields.errors('${userRegisterModel.confirmPassword}')}" th:text="${err}">
+                </p>
+            </div>
+                <input type="text" th:field="*{email}" id="email" class="fadeIn third" name="login" placeholder="email">
+            <div th:if="${#fields.hasErrors('${userRegisterModel.email}')}">
+                <p th:each="err : ${#fields.errors('${userRegisterModel.email}')}" th:text="${err}">
+                </p>
+            </div>
+                <input type="text" th:field="*{address}" id="address" class="fadeIn third" name="login"
+                       placeholder="city and street">
+            <div th:if="${#fields.hasErrors('${userRegisterModel.address}')}">
+                <p th:each="err : ${#fields.errors('${userRegisterModel.address}')}" th:text="${err}">
+                </p>
+            </div>
+            <input type="submit" class="fadeIn fourth" value="Register">
+        </form>
+        <div id="formFooter">
+            <a class="underlineHover" th:href="@{/users/login}">Already have an account?</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

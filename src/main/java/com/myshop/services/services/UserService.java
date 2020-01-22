@@ -17,4 +17,10 @@ public interface UserService extends UserDetailsService {
     List<User> getAllUsers();
 
     List<User> getAllUsersByRole(String role);
+
+    boolean isUsernameFree(UserServiceModel model);
+
+    boolean isEmailFree(UserServiceModel model);
+
+
 }
