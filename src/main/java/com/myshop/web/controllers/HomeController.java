@@ -8,7 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/home")
-    public String home(){
+    @PreAuthorize("isAuthenticated()")
+    public String getHome(){
         return "home" ;
+    }
+
+    @GetMapping("/")
+    @PreAuthorize("isAnonymous()")
+    public String getIndex(){
+        return "index" ;
     }
 }
