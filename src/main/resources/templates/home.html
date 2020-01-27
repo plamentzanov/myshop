@@ -5,9 +5,12 @@
  <th:block th:include="~{fragments/head}"/>
 </head>
 <body>
-<header>
     <th:block th:include="~{fragments/nav-bar}"></th:block>
-</header>
+    <div class="welcome">
+    <p>Welcome, <span  style= "color: #db1414" th:text="${#authentication.getName()}"><br></span>!
+    How are you today?<br>
+    Check what's new in our store!</p>
+    </div>
 
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>

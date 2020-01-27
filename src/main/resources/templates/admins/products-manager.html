@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
+<div class="button_cont" align="center"><a class="example_a" th:href="@{/admins/products-manager/create-category}">Create
+    Category</a>
+    <a class="example_a" th:href="@{/admins/products-manager/all-categories}">All Categories</a>
+    <a class="example_a" th:href="@{/admins/products-manager/create-product}">Create Product</a>
+    <a class="example_a" th:href="@{/admins/products-manager/all-products}">All Products</a>
+</div>
+
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

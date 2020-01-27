@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
+<div class="welcome">
+    <p>Welcome to the admin panel, <span  style= "color: #db1414" th:text="${#authentication.getName()}"></span>!
+       <br> Don't forgot to
+        accept the orders!</p>
+</div>
+
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

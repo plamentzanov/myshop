@@ -1,15 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
 #cssmenu {
   background: #756f6f;
-  width: auto;
+  width: 100%;
 }
 #cssmenu ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  line-height: 1;
+  line-height: 2;
   display: block;
-  zoom: 1;
+  zoom: 0;
 }
 #cssmenu ul:after {
   content: " ";
@@ -35,7 +35,7 @@
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 19px;
+  font-size: 21px;
   position: relative;
   -webkit-transition: color .25s;
   -moz-transition: color .25s;
@@ -48,6 +48,21 @@
 }
 #cssmenu ul li a:hover:before {
   width: 100%;
+}
+#footer{
+  background-color: #756f6f;
+  height: 80px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  line-height: 80px;
+  color: #ffffff;
+  text-align: center;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
 #cssmenu ul li a:before {
@@ -188,6 +203,10 @@ h2.active {
 
 
 
+/* Colors */
+
+
+
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
@@ -249,10 +268,41 @@ input[type=text]:focus {
   background-color: #fff;
   border-bottom: 2px solid #756f6f;
 }
-
+#categoryName{
+  color: #cccccc;
+  border: 1px solid #756f6f;
+  text-align-last: center;
+  background-color: #f6f6f6;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
 input[type=text]::placeholder {
   color: #cccccc;
 }
+input[type=file]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #756f6f;
+}
+
+input[type=file]::placeholder {
+  color: #cccccc;
+}
+
+
 input[type=password]:focus {
   background-color: #fff;
   border-bottom: 2px solid #756f6f;
@@ -400,4 +450,145 @@ input[type=password] {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+}
+
+.Iam {
+  padding: 5em 15em;
+  font: normal 55px/50px Montserrat, sans-serif;
+  color: #db1414;
+}
+.Iam p {
+  height: 50px;
+  float: left;
+  margin-right: 0.3em;
+}
+.Iam b {
+  float: left;
+  overflow: hidden;
+  position: relative;
+  height: 50px;
+  top: 40px;
+}
+.Iam .innerIam {
+  display: inline-block;
+  color: #756f6f;
+  position: relative;
+  white-space: nowrap;
+  top: 0;
+  left: 0;
+
+
+  /*animation*/
+  -webkit-animation:move 5s;
+  -moz-animation:move 5s;
+  -ms-animation:move 5s;
+  -o-animation:move 5s;
+  animation:move 5s;
+  /*animation-iteration-count*/
+  -webkit-animation-iteration-count:infinite;
+  -moz-animation-iteration-count:infinite;
+  -ms-animation-iteration-count:infinite;
+  -o-animation-iteration-count:infinite;
+  animation-iteration-count:infinite;
+  /*animation-delay*/
+  -webkit-animation-delay:1s;
+  -moz-animation-delay:1s;
+  -ms-animation-delay:1s;
+  -o-animation-delay:1s;
+  animation-delay:1s;
+}
+@keyframes move{
+  0%  { top: 0px; }
+  20% { top: -50px; }
+  40% { top: -100px; }
+  60% { top: -150px; }
+  80% { top: -200px; }
+}
+
+@-webkit-keyframes move {
+  0%  { top: 0px; }
+  20% { top: -50px; }
+  40% { top: -100px; }
+  60% { top: -150px; }
+  80% { top: -200px; }
+}
+@-moz-keyframes move {
+  0%  { top: 0px; }
+  20% { top: -50px; }
+  40% { top: -100px; }
+  60% { top: -150px; }
+  80% { top: -200px; }
+}
+@-o-keyframes move {
+  0%  { top: 0px; }
+  20% { top: -50px; }
+  40% { top: -100px; }
+  60% { top: -150px; }
+  80% { top: -200px; }
+}
+@keyframes move {
+  0%  { top: 0px; }
+  20% { top: -50px; }
+  40% { top: -100px; }
+  60% { top: -150px; }
+  80% { top: -200px; }
+}
+
+div.welcome {
+  height: 20em;
+  position: relative }
+div.welcome p {
+  margin: 0;
+  color: #756f6f;
+  display: inline-block;
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 40px;
+  text-align: center;
+  top: 100%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%) }
+
+.example_a {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ed3330;
+  padding: 20px;
+  margin: 25px;
+  border-radius: 5px;
+  display: inline-block;
+  border: none;
+  transition: all 0.4s ease 0s;
+}
+div.createProduct{
+  text-align: center;
+  padding: 20px;
+  margin: auto;
+  width: 50%;
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }

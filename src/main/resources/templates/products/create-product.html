@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
+<div class="createProduct">
+    <form method="POST" th:action="@{/admins/products-manager/create-product}" th:object="${product}" enctype="multipart/form-data">
+        <input type="text" th:value="*{name}" id="name" name="name"
+               placeholder="product name">
+        <input type="text" th:value="*{price}" id="price" name="price"
+               placeholder="price"><br>
+        <input type="text" th:value="*{description}" id="description" name="description"
+               placeholder="description">
+        <br>
+
+        <select id="categoryName" name="categoryName" >
+            <option th:value="*{categoryName}">Select Category</option>
+        </select>
+
+        <script>
+            $(document).ready(function () {
+
+                var url = "http://localhost:8888/api/categories/all";
+
+                $.getJSON(url, function (data) {
+                    $.each(data, function (index, value) {
+                        $('#categoryName').append('<option >' + value.name + '</option>');
+                    });
+                });
+            });
+
+            $('#categoryName').change(function () {
+                $('#msg').text('Selected Item: ' + this.options[this.selectedIndex].text);
+            });
+
+        </script>
+        <br>
+        <br>
+        <div class="upload-btn-wrapper">
+            <button class="btn">Upload a image</button>
+            <input th:value="*{image}" type="file" name="image"/>
+        </div>
+        <br>
+        <br>
+
+        <input type="submit" value="Create">
+    </form>
+</div>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

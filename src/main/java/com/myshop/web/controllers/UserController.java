@@ -2,9 +2,7 @@ package com.myshop.web.controllers;
 
 import com.myshop.services.models.UserServiceModel;
 import com.myshop.services.services.UserService;
-import com.myshop.web.models.UserLoginModel;
 import com.myshop.web.models.UserRegisterModel;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -81,6 +79,5 @@ public class UserController extends BaseController {
 
         return super.redirect("users/login");
     }
-
 
 }

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ProductService {
 
-    Product add(ProductServiceModel model);
+    void add(ProductServiceModel model);
 }
