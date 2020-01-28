@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en"xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
+<div id="row">
+</div>
+<div id="loader"></div>
+<script>
+    $(document).ready(function () {
+
+        var url = "http://localhost:8888/api/products/all";
+
+        $.getJSON(url, function (data) {
+            var $loading = $('#loader').hide()
+            $(document)
+                .ajaxStart(function () {
+                    $loading.show();
+                })
+            $.each(data, function (index, value) {
+                $('#row').append('<div class="product" >' +
+                    '<p class="product-name" >'+ value.name + '</p>' +
+                    '<img class="product-img" src="' + value.imageUrl +'"/>'+
+                    '<p class="product-price">$'+ value.price + '</p>' +
+                    '<p class="product-category">'+ value.category.name + '</p>' +
+                    '<p class="product-desc">'+ value.description + '</p>' +
+                     '<a class="example_a" href="#">Edit</a>' +
+                     '<a class="example_a" href="#">Delete</a>' + '</div>');
+            })
+
+                .ajaxStop(function () {
+                    $loading.hide();
+                });
+        });
+    });
+</script>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

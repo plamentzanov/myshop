@@ -1,4 +1,4 @@
-package com.myshop.services.models;
+package com.myshop.web.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,16 +9,17 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductServiceModel {
+public class ProductViewModel {
+
     private String id;
 
     private String name;
 
-    private CategoryServiceModel category;
-
-    private String imageUrl;
-
     private BigDecimal price;
 
     private String description;
+
+    private CategoryFormModel category;
+
+    private String imageUrl;
 }

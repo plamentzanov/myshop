@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -26,7 +29,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void add(ProductServiceModel model) {
         Product product = this.modelMapper.map(model, Product.class);
-        product.setCategory(this.categoryRepository.findByName(model.getCategoryModel().getName()));
+        product.setCategory(this.categoryRepository.findByName(model.getCategory().getName()));
         this.productRepository.saveAndFlush(product);
+    }
+
+    @Override
+    public List<ProductServiceModel> getAll() {
+        return this.productRepository.findAll()
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,5 @@
 package com.myshop.web.models;
 
-import com.myshop.data.entities.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

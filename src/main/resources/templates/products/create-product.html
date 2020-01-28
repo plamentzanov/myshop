@@ -12,16 +12,26 @@
     <form method="POST" th:action="@{/admins/products-manager/create-product}" th:object="${product}" enctype="multipart/form-data">
         <input type="text" th:value="*{name}" id="name" name="name"
                placeholder="product name">
+        <div th:if="${#fields.hasErrors('${product.name}')}">
+            <p th:each="err : ${#fields.errors('${product.name}')}" th:text="${err}">
+            </p>
+        </div>
         <input type="text" th:value="*{price}" id="price" name="price"
                placeholder="price"><br>
+        <div th:if="${#fields.hasErrors('${product.price}')}">
+            <p th:each="err : ${#fields.errors('${product.price}')}" th:text="${err}">
+            </p>
+        </div>
         <input type="text" th:value="*{description}" id="description" name="description"
                placeholder="description">
         <br>
 
-        <select id="categoryName" name="categoryName" >
-            <option th:value="*{categoryName}">Select Category</option>
+        <select id="categoryName" th:value="*{categoryName}" name="categoryName" >
         </select>
-
+        <div  th:if="${#fields.hasErrors('${product.categoryName}')}">
+            <p th:each="err : ${#fields.errors('${product.categoryName}')}" th:text="${err}">
+            </p>
+        </div>
         <script>
             $(document).ready(function () {
 
@@ -45,6 +55,11 @@
             <button class="btn">Upload a image</button>
             <input th:value="*{image}" type="file" name="image"/>
         </div>
+        <div th:if="${#fields.hasErrors('${product.image}')}">
+            <p th:each="err : ${#fields.errors('${product.image}')}" th:text="${err}">
+            </p>
+        </div>
+
         <br>
         <br>
 

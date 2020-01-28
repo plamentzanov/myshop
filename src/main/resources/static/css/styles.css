@@ -52,9 +52,9 @@
 #footer{
   background-color: #756f6f;
   height: 80px;
-  position: absolute;
   bottom: 0px;
   left: 0px;
+  position: absolute;
   line-height: 80px;
   color: #ffffff;
   text-align: center;
@@ -127,6 +127,7 @@
 
 html {
   background-color: #f0eded;
+
 }
 
 body {
@@ -557,7 +558,7 @@ div.welcome p {
   text-decoration: none;
   background: #ed3330;
   padding: 20px;
-  margin: 25px;
+  margin: 10px;
   border-radius: 5px;
   display: inline-block;
   border: none;
@@ -591,4 +592,68 @@ div.createProduct{
   left: 0;
   top: 0;
   opacity: 0;
+}
+
+div.button_cont{
+  margin: 50px;
+}
+.product {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 220px;
+  text-align: center;
+}
+
+.product-price {
+  color: grey;
+  font-size: 22px;
+}
+.product-img{
+  max-width: 300px;
+}
+
+.product button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.product button:hover {
+  opacity: 0.7;
+}
+#row {
+  display: table;
+  border-spacing: 30px; /*Optional*/
+}
+.product {
+  display: inline-table;
+  margin: 30px;
+}
+
+.product-img{
+  width:220px;
+  height:180px;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+#loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  position: fixed;
+  left: 50%;
+  top: 35%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
