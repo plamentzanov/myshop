@@ -1,14 +1,16 @@
 
 <!DOCTYPE html>
-<html lang="en"xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="~{fragments/head}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <th:block th:include="~{fragments/admin-nav-bar}"></th:block>
 <div class="createProduct">
-<form method="POST" th:action="@{/admins/products-manager/create-category}" th:object="${category}" enctype="multipart/form-data">
+<form method="POST" th:action="@{/categories/create}" th:object="${category}" enctype="multipart/form-data">
     <input type="text" id="name" th:field="*{name}" name="categoryName"
            placeholder="category name">
     <div th:if="${#fields.hasErrors('${category.name}')}">

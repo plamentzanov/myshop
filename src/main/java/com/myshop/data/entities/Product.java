@@ -20,8 +20,8 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_name", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @Column
@@ -29,9 +29,6 @@ public class Product extends BaseEntity {
 
     @Column(nullable = false)
     private BigDecimal price;
-
-    @Column
-    private String description;
 
     @OneToMany(mappedBy = "product")
     private List<Order> orders;

@@ -1,6 +1,5 @@
 package com.myshop.web.controllers;
 
-import com.myshop.data.entities.Category;
 import com.myshop.services.models.CategoryServiceModel;
 import com.myshop.services.services.CategoryService;
 import com.myshop.services.services.CloudinaryService;
@@ -14,13 +13,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
+@RequestMapping("/categories")
 public class CategoryController extends BaseController {
 
     private final CategoryService categoryService;
@@ -34,23 +34,23 @@ public class CategoryController extends BaseController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/admins/products-manager/create-category")
+    @GetMapping("/create")
     @PreAuthorize("hasAuthority('MODERATOR')")
     public String getCreateCategory(@ModelAttribute("category") CategoryCreateModel model){
-        return "categories/create-category";
+        return "categories/create";
     }
 
-    @PostMapping("/admins/products-manager/create-category")
+    @PostMapping("/create")
     @PreAuthorize("hasAuthority('MODERATOR')")
     public ModelAndView createCategory(@Valid @ModelAttribute("category") CategoryCreateModel model, BindingResult bindingResult) throws IOException {
         if (!categoryService.isCategoryFree(model.getName())){
             bindingResult.addError(new FieldError("category","name", "Category already exists!"));
-            return super.view("categories/create-category");
+            return super.view("categories/create");
         }
 
         if (model.getImage().isEmpty()) {
             bindingResult.addError(new FieldError("category","image", "Image cannot be null!"));
-            return super.view("categories/create-category");
+            return super.view("categories/create");
         }
 
         CategoryServiceModel category = this.modelMapper.map(model, CategoryServiceModel.class);

@@ -55,6 +55,7 @@
   bottom: 0px;
   left: 0px;
   position: absolute;
+  display: block;
   line-height: 80px;
   color: #ffffff;
   text-align: center;
@@ -133,6 +134,7 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
+
 }
 
 a {
@@ -452,6 +454,7 @@ input[type=password] {
 * {
   box-sizing: border-box;
   margin: 0;
+  text-align: center;
 }
 
 .Iam {
@@ -594,6 +597,7 @@ div.createProduct{
   opacity: 0;
 }
 
+
 div.button_cont{
   margin: 50px;
 }
@@ -601,27 +605,20 @@ div.button_cont{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 220px;
   text-align: center;
+  max-inline-size: fit-content;
 }
 
 .product-price {
-  color: grey;
-  font-size: 22px;
+  color: #b50909;
+  font-size: 25px;
 }
 .product-img{
   max-width: 300px;
 }
-
-.product button {
-  border: none;
-  outline: 0;
-  padding: 12px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
+.product-desc{
+  max-width: 300px;
 }
+
 
 .product button:hover {
   opacity: 0.7;
@@ -630,6 +627,7 @@ div.button_cont{
   display: table;
   border-spacing: 30px; /*Optional*/
 }
+
 .product {
   display: inline-table;
   margin: 30px;
@@ -641,9 +639,13 @@ div.button_cont{
   background-repeat:no-repeat;
   background-size:cover;
 }
+.product-name{
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+}
 #loader {
   border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
+  border-top: 16px solid #756f6f; /* Blue */
   border-radius: 50%;
   position: fixed;
   left: 50%;

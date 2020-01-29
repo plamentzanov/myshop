@@ -8,17 +8,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
+@RequestMapping("/products")
 public class ProductController extends BaseController {
 
     private final ProductService productService;
@@ -32,35 +32,66 @@ public class ProductController extends BaseController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/admins/products-manager/create-product")
+    @GetMapping("/create")
     @PreAuthorize("hasAuthority('MODERATOR')")
     public String getCreateProduct(@ModelAttribute("product") ProductCreateModel model) {
-        return "products/create-product";
+        return "products/create";
     }
 
-    @PostMapping("/admins/products-manager/create-product")
+    @PostMapping("/create")
     @PreAuthorize("hasAuthority('MODERATOR')")
-    public ModelAndView createProduct(@Valid @ModelAttribute("product") ProductCreateModel model,
-                                      BindingResult bindingResult) throws IOException {
+    public ModelAndView createProduct(@Valid @ModelAttribute("product") ProductCreateModel model, BindingResult bindingResult) throws IOException {
         if (model.getImage().isEmpty()) {
-            bindingResult.addError(new FieldError("product","image", "Image cannot be null!"));
-            return super.view("products/create-product");
+            bindingResult.addError(new FieldError("product", "image", "Image cannot be null!"));
+            return super.view("products/create");
         }
 
-        if (bindingResult.hasErrors()){
-            return super.view("products/create-product");
+        if (bindingResult.hasErrors()) {
+            return super.view("products/create");
         }
 
         ProductServiceModel product = this.modelMapper.map(model, ProductServiceModel.class);
         product.setImageUrl(this.cloudinaryService.upload(model.getImage()));
         this.productService.add(product);
-        return super.view("admins/products-manager");
+        return super.redirect("/products/all-admin");
     }
 
-    @GetMapping("/admins/products-manager/all-products")
+    @GetMapping("/all-admin")
     @PreAuthorize("hasAuthority('MODERATOR')")
-    public String getAllProducts(){
-        return "products/all-products-admin";
+    public String getAllProducts() {
+        return "products/all-admin";
     }
+
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public ModelAndView getEditProduct(@PathVariable String id, Model model) {
+        ProductCreateModel product = this.modelMapper.map(this.productService.getById(id), ProductCreateModel.class);
+        model.addAttribute("product", product);
+        return super.view("products/edit");
+    }
+
+    @PostMapping("/edit/{id}")
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public ModelAndView editProduct(@PathVariable String id, @Valid @ModelAttribute("product") ProductCreateModel model, BindingResult bindingResult) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return super.view("products/edit");
+        }
+
+        ProductServiceModel product = this.modelMapper.map(model, ProductServiceModel.class);
+        if (!model.getImage().isEmpty()) {
+            product.setImageUrl(this.cloudinaryService.upload(model.getImage()));
+        }
+        this.productService.update(product, id);
+        return super.redirect("/products/all-admin");
+    }
+
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public ModelAndView deleteProduct(@PathVariable String id) {
+        this.productService.delete(id);
+        return super.redirect("/products/all-admin");
+    }
+
 
 }

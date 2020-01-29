@@ -17,8 +17,6 @@ public class ProductViewModel {
 
     private BigDecimal price;
 
-    private String description;
-
     private CategoryFormModel category;
 
     private String imageUrl;

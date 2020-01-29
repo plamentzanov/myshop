@@ -20,8 +20,6 @@ public class ProductCreateModel {
     @NotNull
     private BigDecimal price;
 
-    private String description;
-
     @NotNull
     private String categoryName;
 

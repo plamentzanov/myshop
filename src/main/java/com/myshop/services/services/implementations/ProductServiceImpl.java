@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,10 +35,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void update(ProductServiceModel model, String productId) {
+        Product product = this.modelMapper.map(model, Product.class);
+        product.setId(productId);
+        product.setCategory(this.categoryRepository.findByName(model.getCategory().getName()));
+
+        if (product.getImageUrl() == null) {
+            product.setImageUrl(this.productRepository.findById(productId).get().getImageUrl());
+        }
+
+        this.productRepository.saveAndFlush(product);
+    }
+
+    @Override
+    public void delete(String id) {
+        this.productRepository.deleteById(id);
+    }
+
+    @Override
     public List<ProductServiceModel> getAll() {
         return this.productRepository.findAll()
                 .stream()
                 .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductServiceModel getById(String id) {
+        Optional<Product> product = this.productRepository.findById(id);
+        return product.map(p -> this.modelMapper.map(p, ProductServiceModel.class)).orElse(null);
+
     }
 }

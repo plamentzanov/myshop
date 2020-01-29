@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en"xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="~{fragments/head}"/>
@@ -28,15 +28,46 @@
                     '<img class="product-img" src="' + value.imageUrl +'"/>'+
                     '<p class="product-price">$'+ value.price + '</p>' +
                     '<p class="product-category">'+ value.category.name + '</p>' +
-                    '<p class="product-desc">'+ value.description + '</p>' +
-                     '<a class="example_a" href="#">Edit</a>' +
-                     '<a class="example_a" href="#">Delete</a>' + '</div>');
+                     '<a class="example_a" href="/products/edit/'+value.id+'">Edit</a>' +
+                     '<form method="post" action="/products/delete/'+value.id+'"><button type="submit" class="example_a">Delete</button></form></div>');
             })
 
                 .ajaxStop(function () {
                     $loading.hide();
                 });
         });
+    });
+    $(window).bind("load", function() {
+
+        var footerHeight = 0,
+            footerTop = 0,
+            $footer = $("#footer");
+
+        positionFooter();
+
+        function positionFooter() {
+
+            footerHeight = $footer.height();
+            footerTop = ($(window).scrollTop()+$(window).height()-footerHeight)+"px";
+
+            if ( ($(document.body).height()+footerHeight) < $(window).height()) {
+                $footer.css({
+                    position: "absolute"
+                }).animate({
+                    top: footerTop
+                })
+            } else {
+                $footer.css({
+                    position: "static"
+                })
+            }
+
+        }
+
+        $(window)
+            .scroll(positionFooter)
+            .resize(positionFooter)
+
     });
 </script>
 <footer>

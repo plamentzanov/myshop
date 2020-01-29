@@ -19,6 +19,4 @@ public class ProductServiceModel {
     private String imageUrl;
 
     private BigDecimal price;
-
-    private String description;
 }
