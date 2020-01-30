@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryServiceModel {
 
+    private String id;
     private String name;
     private String imageUrl;
 }

@@ -7,17 +7,14 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
+<th:block th:include="~{fragments/nav-bar}"></th:block>
 <div id="row">
-    <div  class="button_cont">
-        <a class="example_a" th:href="@{/products/create}">Create Product</a>
-    </div>
 </div>
 <div id="loader"></div>
-<script>
+<script type="text/javascript" >
     $(document).ready(function () {
+        var url = "http://localhost:8888/api/products/all/" + "[[${id}]]";
 
-        var url = "http://localhost:8888/api/products/all";
 
         $.getJSON(url, function (data) {
             var $loading = $('#loader').hide()
@@ -31,8 +28,7 @@
                     '<img class="product-img" src="' + value.imageUrl +'"/>'+
                     '<p class="product-price">$'+ value.price + '</p>' +
                     '<p class="product-category">'+ value.category.name + '</p>' +
-                     '<a class="example_a" href="/products/edit/'+value.id+'">Edit</a>' +
-                     '<form method="post" action="/products/delete/'+value.id+'"><button type="submit" class="example_a">Delete</button></form></div>');
+                    '<form method="post" action="/users/add-to-cart/'+value.id+'"><button type="submit" class="example_a">Add to Cart</button></form></div>');
             })
 
                 .ajaxStop(function () {

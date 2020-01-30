@@ -1,7 +1,7 @@
 package com.myshop.web.controllers.rest;
 
 import com.myshop.services.services.CategoryService;
-import com.myshop.web.models.CategoryFormModel;
+import com.myshop.web.models.CategoryViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +26,11 @@ public class CategoryRestController {
     }
 
     @GetMapping("/all")
-    @ResponseBody
-    public List<CategoryFormModel> getCategories(){
+    public List<CategoryViewModel> getCategories(){
         return this.categoryService.getAll()
                 .stream()
-                .map(c -> this.modelMapper.map(c, CategoryFormModel.class))
+                .map(c -> this.modelMapper.map(c, CategoryViewModel.class))
                 .collect(Collectors.toList());
     }
+
 }

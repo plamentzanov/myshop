@@ -4,7 +4,6 @@
             <div id='cssmenu'>
                 <ul>
                     <li style="float: left"><a th:href="@{/}"><span>MyShop</span></a></li>
-                    <li style="float: left"><a href='#'><span>Products</span></a></li>
                     <li style="float: right"><a th:href="@{/users/register}"><span>Register</span></a></li>
                     <li style="float: right"><a th:href="@{/users/login}"><span>Login</span></a></li>
                 </ul>
@@ -17,7 +16,7 @@
             <div id='cssmenu'>
                 <ul>
                     <li style="float: left"><a th:href="@{/home}"><span>MyShop</span></a></li>
-                    <li style="float: left"><a href='#'><span>Products</span></a></li>
+                    <li style="float: left"><a th:href="@{/products/select-category}"><span>Products</span></a></li>
                     <li style="float: right"><a th:href='@{/logout}'><span>Log Out</span></a></li>
                     <li style="float: right"><a href='#'><span>Profile</span></a></li>
                     <th:block sec:authorize="hasAuthority('MODERATOR')">

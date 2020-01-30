@@ -58,7 +58,7 @@ public class ProductController extends BaseController {
 
     @GetMapping("/all-admin")
     @PreAuthorize("hasAuthority('MODERATOR')")
-    public String getAllProducts() {
+    public String getAllProductsAdmin() {
         return "products/all-admin";
     }
 
@@ -93,5 +93,16 @@ public class ProductController extends BaseController {
         return super.redirect("/products/all-admin");
     }
 
+    @GetMapping("/select-category")
+    @PreAuthorize("isAuthenticated()")
+    public String getAllProducts(){
+        return "products/all-categories";
+    }
 
+    @GetMapping("/all/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String getAllProductsByCategory(@PathVariable String id, Model model){
+        model.addAttribute("id", id);
+        return "products/all-by-category";
+    }
 }

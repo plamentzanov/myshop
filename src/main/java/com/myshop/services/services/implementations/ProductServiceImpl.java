@@ -43,7 +43,6 @@ public class ProductServiceImpl implements ProductService {
         if (product.getImageUrl() == null) {
             product.setImageUrl(this.productRepository.findById(productId).get().getImageUrl());
         }
-
         this.productRepository.saveAndFlush(product);
     }
 
@@ -55,6 +54,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductServiceModel> getAll() {
         return this.productRepository.findAll()
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductServiceModel> getAllByCategoryId(String id) {
+        return this.productRepository.findAllByCategoryId(id)
                 .stream()
                 .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
                 .collect(Collectors.toList());

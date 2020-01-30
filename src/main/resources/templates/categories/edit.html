@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
+<div class="createProduct">
+    <form method="POST" th:object="${category}" enctype="multipart/form-data">
+        <input type="text" th:field="*{name}" id="name" name="name"
+               placeholder="product name">
+        <div th:if="${#fields.hasErrors('${category.name}')}">
+            <p th:each="err : ${#fields.errors('${category.name}')}" th:text="${err}">
+            </p>
+        </div>
+        <br>
+        <br>
+        <div class="upload-btn-wrapper">
+            <button class="btn">Change the image</button>
+            <input th:value="*{image}" type="file" name="image"/>
+        </div>
+
+        <br>
+        <br>
+
+        <input type="submit" value="Update">
+    </form>
+</div>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

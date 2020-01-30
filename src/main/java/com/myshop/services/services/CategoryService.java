@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface CategoryService {
     void save(CategoryServiceModel model);
-    void delete(CategoryServiceModel model);
+    void delete(String id);
+    void update(CategoryServiceModel model, String id);
+    CategoryServiceModel getById(String id);
     List<CategoryServiceModel> getAll();
     boolean isCategoryFree(String name);
 }

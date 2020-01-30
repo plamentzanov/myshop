@@ -15,10 +15,5 @@ public class AdminController extends BaseController {
         return "admins/panel";
     }
 
-    @GetMapping("/products-manager")
-    @PreAuthorize("hasAuthority('MODERATOR')")
-    public String getProductsManager(){
-        return "admins/products-manager";
-    }
 
 }

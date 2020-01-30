@@ -13,5 +13,6 @@ public interface ProductService {
     void update(ProductServiceModel model, String productId);
     void delete(String id);
     List<ProductServiceModel> getAll();
+    List<ProductServiceModel> getAllByCategoryId(String id);
     ProductServiceModel getById(String id);
 }
