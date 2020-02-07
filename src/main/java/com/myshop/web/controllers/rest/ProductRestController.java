@@ -5,7 +5,6 @@ import com.myshop.web.models.ProductViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,14 +27,6 @@ public class ProductRestController {
     @GetMapping("/all")
     public List<ProductViewModel> getAllProducts(){
         return this.productService.getAll()
-                .stream()
-                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/all/{id}")
-    public List<ProductViewModel> getByCategory(@PathVariable String id){
-        return this.productService.getAllByCategoryId(id)
                 .stream()
                 .map(p -> this.modelMapper.map(p, ProductViewModel.class))
                 .collect(Collectors.toList());

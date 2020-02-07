@@ -9,33 +9,22 @@
 <body>
 <th:block th:include="~{fragments/nav-bar}"></th:block>
 <div id="row">
+    <div class="product" th:each="product : ${products}">
+    <p class="product-name" th:text="${product.name}"/>
+    <img class="product-img" th:src="${product.imageUrl}"/>
+        <p class="product-price" th:text="'$'+${product.price}"></p>
+    <p class="product-category" th:text="${product.category.name}"/>
+    <form method="post" th:object="${model}" th:action="@{/orders/add-to-cart/} + ${product.id}">
+        <input type="number" min="1" required th:field="*{quantity}" name="quantity" placeholder="quantity">
+        <div th:if="${#fields.hasErrors('${model.quantity}')}">
+            <p th:each="err : ${#fields.errors('${model.quantity}')}" th:text="${err}">
+            </p>
+        </div>
+        <button type="submit" class="example_a">Add to Cart</button>
+    </form>
 </div>
-<div id="loader"></div>
-<script type="text/javascript" >
-    $(document).ready(function () {
-        var url = "http://localhost:8888/api/products/all/" + "[[${id}]]";
-
-
-        $.getJSON(url, function (data) {
-            var $loading = $('#loader').hide()
-            $(document)
-                .ajaxStart(function () {
-                    $loading.show();
-                })
-            $.each(data, function (index, value) {
-                $('#row').append('<div class="product" >' +
-                    '<p class="product-name" >'+ value.name + '</p>' +
-                    '<img class="product-img" src="' + value.imageUrl +'"/>'+
-                    '<p class="product-price">$'+ value.price + '</p>' +
-                    '<p class="product-category">'+ value.category.name + '</p>' +
-                    '<form method="post" action="/users/add-to-cart/'+value.id+'"><button type="submit" class="example_a">Add to Cart</button></form></div>');
-            })
-
-                .ajaxStop(function () {
-                    $loading.hide();
-                });
-        });
-    });
+</div>
+<script>
     $(window).bind("load", function() {
 
         var footerHeight = 0,

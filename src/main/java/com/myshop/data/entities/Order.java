@@ -14,13 +14,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Order extends BaseEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private User customer;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Column(nullable = false)
     private Integer quantity;

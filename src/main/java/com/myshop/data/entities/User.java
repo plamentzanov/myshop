@@ -26,7 +26,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "user")
     private Set<Order> cart;
 
     @Column(nullable = false)

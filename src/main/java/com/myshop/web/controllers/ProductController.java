@@ -3,7 +3,9 @@ package com.myshop.web.controllers;
 import com.myshop.services.models.ProductServiceModel;
 import com.myshop.services.services.CloudinaryService;
 import com.myshop.services.services.ProductService;
+import com.myshop.web.models.OrderCreateModel;
 import com.myshop.web.models.ProductCreateModel;
+import com.myshop.web.models.ProductViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/products")
@@ -102,7 +106,12 @@ public class ProductController extends BaseController {
     @GetMapping("/all/{id}")
     @PreAuthorize("isAuthenticated()")
     public String getAllProductsByCategory(@PathVariable String id, Model model){
-        model.addAttribute("id", id);
+        List<ProductViewModel> products =  this.productService.getAllByCategoryId(id)
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
+                .collect(Collectors.toList());
+        model.addAttribute("products" ,products);
+        model.addAttribute("model", new OrderCreateModel());
         return "products/all-by-category";
     }
 }

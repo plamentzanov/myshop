@@ -22,7 +22,7 @@
                     <th:block sec:authorize="hasAuthority('MODERATOR')">
                         <li style="float: left"><a th:href="@{/admins/panel}"><span>Admin Panel</span></a></li>
                     </th:block>
-                    <li class="last" style="float: right"><a href="#"><span>Cart</span></a></li>
+                    <li class="last" style="float: right"><a th:href="@{/orders/cart}"><span>Cart</span></a></li>
                 </ul>
             </div>
         </nav>
