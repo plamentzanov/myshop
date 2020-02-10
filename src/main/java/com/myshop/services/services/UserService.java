@@ -21,6 +21,4 @@ public interface UserService extends UserDetailsService {
     boolean isUsernameFree(UserServiceModel model);
 
     boolean isEmailFree(UserServiceModel model);
-
-
 }

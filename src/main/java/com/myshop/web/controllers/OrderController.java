@@ -1,6 +1,9 @@
 package com.myshop.web.controllers;
 
+import com.myshop.data.entities.GlobalOrder;
+import com.myshop.services.models.GlobalOrderServiceModel;
 import com.myshop.services.models.OrderServiceModel;
+import com.myshop.services.services.GlobalOrderService;
 import com.myshop.services.services.OrderService;
 import com.myshop.services.services.ProductService;
 import com.myshop.web.models.OrderCreateModel;
@@ -27,6 +30,7 @@ public class OrderController extends BaseController{
 
     private final OrderService ordersService;
     private final ProductService productService;
+//    private final GlobalOrderService globalOrderService;
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -83,10 +87,13 @@ public class OrderController extends BaseController{
         return "orders/checkout";
     }
 
-    @PostMapping("/checkout")
-    @PreAuthorize("isAuthenticated()")
-    public ModelAndView checkout(){
-
-        return super.redirect("/home");
-    }
+//    @PostMapping("/checkout")
+//    @PreAuthorize("isAuthenticated()")
+//    public ModelAndView checkout(){
+//        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+//        UserCheckoutModel user = this.modelMapper.map(loggedInUser.getPrincipal(), UserCheckoutModel.class);
+//        GlobalOrderServiceModel globalOrder = new GlobalOrderSe();
+//        globalOrder.set
+//        return super.redirect("/home");
+//    }
 }
