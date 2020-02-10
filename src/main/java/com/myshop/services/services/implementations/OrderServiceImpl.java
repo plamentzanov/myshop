@@ -6,10 +6,12 @@ import com.myshop.data.repositories.ProductRepository;
 import com.myshop.data.repositories.UserRepository;
 import com.myshop.services.models.OrderServiceModel;
 import com.myshop.services.services.OrderService;
+import com.myshop.web.models.OrderViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +42,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteById(String id) {
         this.orderRepository.deleteById(id);
+    }
+
+    @Override
+    public Double getTotalSum(String name) {
+        List<Order> cart = this.orderRepository.findAllByUserUsername(name);
+        double totalSum = 0;
+        for (Order order : cart) {
+            totalSum +=  order.getQuantity() *  Double.parseDouble((order.getProduct().getPrice()).toString());
+        }
+        return totalSum;
     }
 
     @Override

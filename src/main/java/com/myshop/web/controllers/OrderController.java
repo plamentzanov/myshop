@@ -6,6 +6,7 @@ import com.myshop.services.services.ProductService;
 import com.myshop.web.models.OrderCreateModel;
 import com.myshop.web.models.OrderViewModel;
 import com.myshop.web.models.ProductViewModel;
+import com.myshop.web.models.UserCheckoutModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +47,7 @@ public class OrderController extends BaseController{
     }
 
     @GetMapping("/cart")
+    @PreAuthorize("isAuthenticated()")
     public String getCart(Model model){
        Authentication loggedInUser =  SecurityContextHolder.getContext().getAuthentication();
         List<OrderViewModel> cart = this.ordersService.getCart(loggedInUser.getName())
@@ -54,10 +55,7 @@ public class OrderController extends BaseController{
                 .map(o -> this.modelMapper.map(o, OrderViewModel.class))
                 .collect(Collectors.toList());
 
-        double totalSum = 0;
-        for (OrderViewModel orderViewModel : cart) {
-            totalSum +=  orderViewModel.getQuantity() *  Double.parseDouble((orderViewModel.getProduct().getPrice()).toString());
-        }
+        double totalSum = this.ordersService.getTotalSum(loggedInUser.getName());
 
         model.addAttribute("cart", cart);
         model.addAttribute("totalSum", totalSum);
@@ -66,8 +64,29 @@ public class OrderController extends BaseController{
     }
 
     @GetMapping("/remove-from-cart/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView removeFromCart(@PathVariable String id){
         this.ordersService.deleteById(id);
         return super.redirect("/orders/cart");
+    }
+
+    @GetMapping("/checkout")
+    @PreAuthorize("isAuthenticated()")
+    public String getCheckout(Model model){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        UserCheckoutModel user = this.modelMapper.map(loggedInUser.getPrincipal(), UserCheckoutModel.class);
+        double totalSum = this.ordersService.getTotalSum(loggedInUser.getName());
+
+        model.addAttribute("user", user);
+        model.addAttribute("totalSum", totalSum);
+
+        return "orders/checkout";
+    }
+
+    @PostMapping("/checkout")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView checkout(){
+
+        return super.redirect("/home");
     }
 }

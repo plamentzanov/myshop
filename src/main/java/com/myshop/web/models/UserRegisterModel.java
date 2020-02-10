@@ -26,7 +26,7 @@ public class UserRegisterModel {
     private String confirmPassword;
 
     @NotNull
-    @Size(min = 3, max = 30)
+    @Size(min = 7, max = 30)
     private String email;
 
     @NotNull

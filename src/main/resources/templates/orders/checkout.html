@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<th:block th:include="~{fragments/nav-bar}"></th:block>
+<div class="createProduct">
+    <form method="POST" th:action="@{/orders/checkout}" th:object="${user}">
+        <input type="text" th:field="*{address}" id="name" name="name"
+               readonly>
+        <input type="text" th:field="*{email}" id="price" name="price"
+               readonly><br>
+        <div class="table-wrapper">
+            <div id="loader"></div>
+            <table id="fl-table" class="fl-table">
+                <thead>
+                <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            $(document).ready(function () {
+
+                var url = "http://localhost:8888/api/orders/cart";
+
+                $.getJSON(url, function (data) {
+                    var $loading = $('#loader').hide();
+                    $(document)
+                        .ajaxStart(function () {
+                            $loading.show();
+                        });
+                    $.each(data, function (index, value) {
+                        $('#fl-table tbody').append('<tr class="table-data">' +
+                            '<td>'+ value.product.name + '</td>' +
+                            '<td>'+ value.quantity  + '</td>' +
+                            '<td>$'+ value.product.price*value.quantity + '</td>' +
+                            '</tr>');
+                    })
+
+                        .ajaxStop(function () {
+                            $loading.hide();
+                        });
+                });
+            });
+        </script>
+        <div  id="confirmButton" class="upload-btn-wrapper">
+            <p class="totalPrice" th:text="'Total: $'+${totalSum}"></p>
+            <button class="example_a">Confirm</button>
+        </div>
+    </form>
+</div>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>
