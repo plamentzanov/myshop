@@ -1,12 +1,12 @@
 package com.myshop.data.entities;
 
 import com.myshop.data.entities.base.BaseEntity;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,14 +14,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class GlobalOrder extends BaseEntity {
 
-    @ManyToMany
-    @JoinTable(
-            name = "global_orders_orders",
-            joinColumns = @JoinColumn(name = "global_order_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
-    )
-    private List<Order> orders;
+    @OneToMany(mappedBy = "globalOrder")
+    private List<ArchivedOrder> orders;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @Column(name = "order_date")
+    private Date orderDate;
 }

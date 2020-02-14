@@ -1,8 +1,7 @@
 package com.myshop.web.controllers;
 
-import com.myshop.data.entities.GlobalOrder;
-import com.myshop.services.models.GlobalOrderServiceModel;
 import com.myshop.services.models.OrderServiceModel;
+import com.myshop.services.services.ArchivedOrderService;
 import com.myshop.services.services.GlobalOrderService;
 import com.myshop.services.services.OrderService;
 import com.myshop.services.services.ProductService;
@@ -29,13 +28,16 @@ import java.util.stream.Collectors;
 public class OrderController extends BaseController{
 
     private final OrderService ordersService;
+    private final ArchivedOrderService archivedOrderService;
+    private final GlobalOrderService globalOrderService;
     private final ProductService productService;
-//    private final GlobalOrderService globalOrderService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public OrderController(OrderService ordersService, ProductService productService, ModelMapper modelMapper) {
+    public OrderController(OrderService ordersService, ArchivedOrderService archivedOrderService, GlobalOrderService globalOrderService, ProductService productService, ModelMapper modelMapper) {
         this.ordersService = ordersService;
+        this.archivedOrderService = archivedOrderService;
+        this.globalOrderService = globalOrderService;
         this.productService = productService;
         this.modelMapper = modelMapper;
     }
@@ -87,13 +89,19 @@ public class OrderController extends BaseController{
         return "orders/checkout";
     }
 
-//    @PostMapping("/checkout")
-//    @PreAuthorize("isAuthenticated()")
-//    public ModelAndView checkout(){
-//        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-//        UserCheckoutModel user = this.modelMapper.map(loggedInUser.getPrincipal(), UserCheckoutModel.class);
-//        GlobalOrderServiceModel globalOrder = new GlobalOrderSe();
-//        globalOrder.set
-//        return super.redirect("/home");
-//    }
+    @PostMapping("/checkout")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView checkout(){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        UserCheckoutModel user = this.modelMapper.map(loggedInUser.getPrincipal(), UserCheckoutModel.class);
+        String globalOrderId = this.globalOrderService.create(user.getUsername());
+        this.archivedOrderService.archive(user.getCart()
+                .stream()
+                .map(o -> this.modelMapper.map(o, OrderServiceModel.class))
+                .collect(Collectors.toList()),
+                globalOrderId
+        );
+
+        return super.redirect("/orders/cart");
+    }
 }

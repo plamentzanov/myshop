@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.thymeleaf.standard.expression.Each;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -27,6 +28,9 @@ public class User extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Order> cart;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<GlobalOrder> globalOrders;
 
     @Column(nullable = false)
     private String address;

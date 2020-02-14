@@ -59,4 +59,11 @@ public class OrderServiceImpl implements OrderService {
                 .map(o -> this.modelMapper.map(o, OrderServiceModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAllById(List<String> ids) {
+        for (String id : ids) {
+            this.orderRepository.deleteById(id);
+        }
+    }
 }

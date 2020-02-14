@@ -23,11 +23,7 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @Column(nullable = false)
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
-
-    @ManyToMany(mappedBy = "orders")
-    private List<GlobalOrder> globalOrders;
-
 
 }

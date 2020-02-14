@@ -14,5 +14,5 @@ public class UserCheckoutModel {
     private String username;
     private String address;
     private String email;
-    private List<OrderViewModel> orders;
+    private List<OrderViewModel> cart;
 }
