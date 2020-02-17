@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 public class CategoryCreateModel {
 
     @NotNull
-    @Size(min = 3, max = 10)
     private String name;
 
     @NotNull

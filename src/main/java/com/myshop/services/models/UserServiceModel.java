@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,6 +16,7 @@ public class UserServiceModel {
     private String password;
     private String email;
     private String address;
+    private List<OrderServiceModel> cart;
     private Set<RoleServiceModel> authorities;
 
 }

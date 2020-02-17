@@ -11,9 +11,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ArchivedOrderServiceImpl implements ArchivedOrderService {
 
     private final OrderRepository orderRepository;
@@ -30,14 +33,20 @@ public class ArchivedOrderServiceImpl implements ArchivedOrderService {
     @Override
     public void archive(List<OrderServiceModel> orders, String globalOrderId) {
         GlobalOrder globalOrder = this.globalOrderRepository.findById(globalOrderId).get();
+
+        this.orderRepository.deleteAllByUserUsername(globalOrder.getUser().getUsername());
+
+        List<ArchivedOrder> archivedOrders = new ArrayList<>();
+        ArchivedOrder archivedOrder;
         for (OrderServiceModel order : orders) {
-            this.orderRepository.deleteById(order.getId());
-            ArchivedOrder archivedOrder = new ArchivedOrder();
+            archivedOrder = new ArchivedOrder();
             archivedOrder.setGlobalOrder(globalOrder);
             archivedOrder.setProductName(order.getProduct().getName());
             archivedOrder.setQuantity(order.getQuantity());
             archivedOrder.setCompleted(false);
-            this.archivedOrderRepository.saveAndFlush(archivedOrder);
+            archivedOrders.add(archivedOrder);
         }
+
+        this.archivedOrderRepository.saveAll(archivedOrders);
     }
 }

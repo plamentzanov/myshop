@@ -83,6 +83,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserServiceModel getUserByName(String name) {
+        return this.modelMapper.map(
+                this.userRepository.findByUsername(name),
+                UserServiceModel.class
+        );
+    }
+
+    @Override
     public boolean isUsernameFree(UserServiceModel model) {
         User user = this.userRepository.findByUsername(model.getUsername());
 

@@ -9,9 +9,13 @@
 <div id="row">
     <p class="totalPrice" th:text="'Total: $'+${totalSum}"></p>
     <form th:action="@{/orders/checkout}">
-        <button type="submit" class="example_a">Checkout</button>
+        <button th:if="${totalSum > 0}" type="submit" class="example_a">Checkout</button>
     </form>
     <br>
+
+    <div th:if="${success}">
+        <p class="product-price">Your order is being processed.</p>
+    </div>
     <div class="product" th:each="order : ${cart}">
         <p class="product-name" th:text="${order.product.name}"/>
         <img class="product-img" th:src="${order.product.imageUrl}"/>

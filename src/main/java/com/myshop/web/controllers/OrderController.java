@@ -1,10 +1,8 @@
 package com.myshop.web.controllers;
 
 import com.myshop.services.models.OrderServiceModel;
-import com.myshop.services.services.ArchivedOrderService;
-import com.myshop.services.services.GlobalOrderService;
-import com.myshop.services.services.OrderService;
-import com.myshop.services.services.ProductService;
+import com.myshop.services.models.UserServiceModel;
+import com.myshop.services.services.*;
 import com.myshop.web.models.OrderCreateModel;
 import com.myshop.web.models.OrderViewModel;
 import com.myshop.web.models.ProductViewModel;
@@ -30,14 +28,16 @@ public class OrderController extends BaseController{
     private final OrderService ordersService;
     private final ArchivedOrderService archivedOrderService;
     private final GlobalOrderService globalOrderService;
+    private final UserService userService;
     private final ProductService productService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public OrderController(OrderService ordersService, ArchivedOrderService archivedOrderService, GlobalOrderService globalOrderService, ProductService productService, ModelMapper modelMapper) {
+    public OrderController(OrderService ordersService, ArchivedOrderService archivedOrderService, GlobalOrderService globalOrderService, UserService userService, ProductService productService, ModelMapper modelMapper) {
         this.ordersService = ordersService;
         this.archivedOrderService = archivedOrderService;
         this.globalOrderService = globalOrderService;
+        this.userService = userService;
         this.productService = productService;
         this.modelMapper = modelMapper;
     }
@@ -54,7 +54,7 @@ public class OrderController extends BaseController{
 
     @GetMapping("/cart")
     @PreAuthorize("isAuthenticated()")
-    public String getCart(Model model){
+    public ModelAndView getCart(Model model){
        Authentication loggedInUser =  SecurityContextHolder.getContext().getAuthentication();
         List<OrderViewModel> cart = this.ordersService.getCart(loggedInUser.getName())
                 .stream()
@@ -66,7 +66,8 @@ public class OrderController extends BaseController{
         model.addAttribute("cart", cart);
         model.addAttribute("totalSum", totalSum);
 
-        return "orders/cart";
+
+        return super.view("/orders/cart");
     }
 
     @GetMapping("/remove-from-cart/{id}")
@@ -91,17 +92,19 @@ public class OrderController extends BaseController{
 
     @PostMapping("/checkout")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView checkout(){
+    public ModelAndView checkout(Model model) throws InterruptedException {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        UserCheckoutModel user = this.modelMapper.map(loggedInUser.getPrincipal(), UserCheckoutModel.class);
+        UserServiceModel userServiceModel = this.userService.getUserByName(loggedInUser.getName());
+        UserCheckoutModel user = this.modelMapper.map(userServiceModel, UserCheckoutModel.class);
         String globalOrderId = this.globalOrderService.create(user.getUsername());
-        this.archivedOrderService.archive(user.getCart()
+        List<OrderServiceModel> cart = user.getCart()
                 .stream()
                 .map(o -> this.modelMapper.map(o, OrderServiceModel.class))
-                .collect(Collectors.toList()),
-                globalOrderId
-        );
+                .collect(Collectors.toList());
 
-        return super.redirect("/orders/cart");
+        model.addAttribute("totalSum", 0.0);
+        this.archivedOrderService.archive(cart, globalOrderId);
+        model.addAttribute("success", true);
+        return super.view("/orders/cart");
     }
 }

@@ -41,6 +41,12 @@ public class CategoryController extends BaseController {
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('MODERATOR')")
     public ModelAndView createCategory(@Valid @ModelAttribute("category") CategoryCreateModel model, BindingResult bindingResult) throws IOException {
+
+        if (model.getName() == null){
+            bindingResult.addError(new FieldError("category","name", "Category cannot be null!"));
+            return super.view("categories/create");
+        }
+
         if (!categoryService.isCategoryFree(model.getName())){
             bindingResult.addError(new FieldError("category","name", "Category already exists!"));
             return super.view("categories/create");
