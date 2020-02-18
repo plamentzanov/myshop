@@ -12,6 +12,9 @@
     <div  class="button_cont">
         <a class="example_a" th:href="@{/categories/create}">Create Category</a>
     </div>
+    <div th:if="${notEmpty}">
+        <p>Category has items!</p>
+    </div>
     <div id="loader"></div>
 </div>
 <script>

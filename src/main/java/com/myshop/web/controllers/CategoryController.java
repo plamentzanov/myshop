@@ -42,8 +42,7 @@ public class CategoryController extends BaseController {
     @PreAuthorize("hasAuthority('MODERATOR')")
     public ModelAndView createCategory(@Valid @ModelAttribute("category") CategoryCreateModel model, BindingResult bindingResult) throws IOException {
 
-        if (model.getName() == null){
-            bindingResult.addError(new FieldError("category","name", "Category cannot be null!"));
+        if (bindingResult.hasErrors()) {
             return super.view("categories/create");
         }
 
@@ -101,7 +100,12 @@ public class CategoryController extends BaseController {
     }
 
     @PostMapping("/delete/{id}")
-    public ModelAndView deleteCategory(@PathVariable String id){
+    public ModelAndView deleteCategory(@PathVariable String id, Model model){
+        CategoryServiceModel category = this.categoryService.getById(id);
+        if (!category.getProducts().isEmpty()) {
+            model.addAttribute("notEmpty",true);
+            return super.view("categories/all-admin");
+        }
         this.categoryService.delete(id);
         return super.redirect("/categories/all-admin");
     }

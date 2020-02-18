@@ -4,7 +4,7 @@
             <ul>
                 <li style="float: left"><a th:href="@{/products/all-admin}"><span>Products Manager</span></a></li>
                 <li style="float: left"><a th:href="@{/categories/all-admin}"><span>Category Manager</span></a></li>
-                <li style="float: left"><a href='#'><span>Orders Manager</span></a></li>
+                <li style="float: left"><a th:href="@{/global-orders/orders-manager}"><span>Orders Manager</span></a></li>
                 <li style="float: right"><a th:href='@{/home}'><span>Back</span></a></li>
                 <th:block sec:authorize="hasAuthority('ADMIN')">
                     <li style="float: left"><a href='#'><span>Users Manager</span></a></li>

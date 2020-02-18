@@ -25,4 +25,7 @@ public class GlobalOrder extends BaseEntity {
 
     @Column(name = "order_date")
     private Date orderDate;
+
+    @Column(name = "is_completed", columnDefinition = "boolean default false")
+    private boolean isCompleted;
 }

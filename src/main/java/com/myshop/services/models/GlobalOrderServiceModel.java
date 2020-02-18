@@ -11,7 +11,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class GlobalOrderServiceModel {
+
+    private String id;
     private List<ArchivedOrderServiceModel> orders;
     private UserServiceModel user;
     private Date orderDate;
+    private boolean isCompleted;
 }

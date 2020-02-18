@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<th:block th:include="~{fragments/nav-bar}"></th:block>
+
+<div class="table-wrapper">
+    <div id="loader"></div>
+    <table id="fl-table" class="fl-table">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div  class="button_cont"><a class="example_a" th:href="@{/global-orders/accept/} + ${id}">Accept Order</a></div>
+    <div  class="button_cont"><a class="example_a" th:href="@{/global-orders/decline/} + ${id}">Decline Order</a></div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        var url = "http://localhost:8888/api/global-orders/" + "[[${id}]]";
+
+        $.getJSON(url, function (data) {
+            var $loading = $('#loader').hide();
+            $(document)
+                .ajaxStart(function () {
+                    $loading.show();
+                });
+            $.each(data, function (index, value) {
+                $('#fl-table tbody').append('<tr class="table-data">' +
+                    '<td>' + value.productName + '</td>' +
+                    '<td>' + value.quantity + '</td>' +
+                    '</tr>');
+            })
+
+                .ajaxStop(function () {
+                    $loading.hide();
+                });
+        });
+    });
+</script>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>
