@@ -1,5 +1,6 @@
 package com.myshop.web.controllers;
 
+import com.myshop.services.models.ArchivedOrderServiceModel;
 import com.myshop.services.models.GlobalOrderServiceModel;
 import com.myshop.services.services.ArchivedOrderService;
 import com.myshop.services.services.GlobalOrderService;
@@ -13,19 +14,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/global-orders")
 public class GlobalOrderController extends BaseController{
 
     private final GlobalOrderService globalOrderService;
     private final ArchivedOrderService archivedOrderService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public GlobalOrderController(GlobalOrderService globalOrderService, ArchivedOrderService archivedOrderService, ModelMapper modelMapper) {
+    public GlobalOrderController(GlobalOrderService globalOrderService, ArchivedOrderService archivedOrderService) {
         this.globalOrderService = globalOrderService;
         this.archivedOrderService = archivedOrderService;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/orders-manager")
@@ -54,6 +55,10 @@ public class GlobalOrderController extends BaseController{
     @GetMapping("/decline/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
     public ModelAndView declineOrder(@PathVariable String id){
+        GlobalOrderServiceModel globalOrder = this.globalOrderService.getById(id);
+        List<ArchivedOrderServiceModel> orders = globalOrder.getOrders();
+        this.archivedOrderService.deleteAll(orders);
+        this.globalOrderService.deleteById(id);
         return super.redirect("/global-orders/orders-manager");
     }
 }

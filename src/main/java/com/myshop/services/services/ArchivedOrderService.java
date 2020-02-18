@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface ArchivedOrderService {
     void archive(List<OrderServiceModel> orders, String globalOrderId) throws InterruptedException;
+
     List<ArchivedOrderServiceModel> setCompleted(List<ArchivedOrderServiceModel> orders);
+
+    void deleteAll(List<ArchivedOrderServiceModel> orders);
 }

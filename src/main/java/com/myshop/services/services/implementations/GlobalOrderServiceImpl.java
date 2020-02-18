@@ -56,4 +56,9 @@ public class GlobalOrderServiceImpl implements GlobalOrderService {
         updateOrder.setUser(this.userRepository.findByUsername(globalOrder.getUser().getUsername()));
         this.globalOrderRepository.saveAndFlush(updateOrder);
     }
+
+    @Override
+    public void deleteById(String id) {
+       this.globalOrderRepository.deleteById(id);
+    }
 }

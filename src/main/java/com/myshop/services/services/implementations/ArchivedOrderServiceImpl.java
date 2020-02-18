@@ -68,4 +68,11 @@ public class ArchivedOrderServiceImpl implements ArchivedOrderService {
                 .map(o -> this.modelMapper.map(o, ArchivedOrderServiceModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAll(List<ArchivedOrderServiceModel> orders) {
+        this.archivedOrderRepository.deleteAll(orders.stream()
+        .map(o -> this.modelMapper.map(o, ArchivedOrder.class))
+        .collect(Collectors.toList()));
+    }
 }
