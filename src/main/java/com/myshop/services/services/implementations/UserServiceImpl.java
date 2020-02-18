@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(UserServiceModel model) {
+    public void register(UserServiceModel model) {
 
         User user = this.modelMapper.map(model, User.class);
 
@@ -59,28 +60,23 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
-        return this.userRepository.saveAndFlush(user);
+        this.userRepository.saveAndFlush(user);
     }
 
     @Override
-    public User delete(UserServiceModel model) {
-        return null;
+    public String getUsersRole(String id) {
+        
     }
 
-    @Override
-    public User edit(UserServiceModel model) {
-        return null;
-    }
 
     @Override
-    public List<User> getAllUsers() {
-        return null;
+    public List<UserServiceModel> getAllUsers() {
+        return this.userRepository.findAll()
+                .stream()
+                .map(u -> this.modelMapper.map(u, UserServiceModel.class))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public List<User> getAllUsersByRole(String role) {
-        return null;
-    }
 
     @Override
     public UserServiceModel getUserByName(String name) {

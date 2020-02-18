@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
+
+<div class="table-wrapper">
+    <div id="loader"></div>
+    <table id="fl-table" class="fl-table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Manage role</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+
+        var url = "http://localhost:8888/api/users/all";
+
+        $.getJSON(url, function (data) {
+            var $loading = $('#loader').hide();
+            $(document)
+                .ajaxStart(function () {
+                    $loading.show();
+                });
+            $.each(data, function (index, value) {
+                $('#fl-table tbody').append('<tr class="table-data">' +
+                    '<td>' + value.username + '</td>' +
+                    '<td>' + value.address + '</td>' +
+                    '<td>' + value.email + '</td>' +
+                    '<td><a href="/users/manage/' + value.id + '"</a>Click me</td></a>' +
+                    '</tr>');
+            })
+
+                .ajaxStop(function () {
+                    $loading.hide();
+                });
+        });
+    });
+</script>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

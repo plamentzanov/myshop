@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,7 +43,6 @@ public class UserController extends BaseController {
         model.addAttribute("loginError", true);
         return "users/login";
     }
-
 
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
@@ -80,4 +80,14 @@ public class UserController extends BaseController {
         return super.redirect("users/login");
     }
 
+    @GetMapping("/users-manager")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String getUsersManager(){
+        return "users/users-manager";
+    }
+
+    @GetMapping("/manage/{id}")
+    public String manageUser(@PathVariable String id) {
+
+    }
 }

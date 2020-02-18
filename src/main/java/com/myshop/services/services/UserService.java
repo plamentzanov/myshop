@@ -8,15 +8,11 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
-    User register(UserServiceModel model);
+    void register(UserServiceModel model);
 
-    User delete(UserServiceModel model);
+    String getUsersRole(String id);
 
-    User edit(UserServiceModel model);
-
-    List<User> getAllUsers();
-
-    List<User> getAllUsersByRole(String role);
+    List<UserServiceModel> getAllUsers();
 
     UserServiceModel getUserByName(String name);
 
