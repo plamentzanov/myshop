@@ -11,13 +11,18 @@
 
 <div class="table-wrapper">
     <div id="loader"></div>
+    <div th:if="${error} == 1">
+        <p> User is already Moderator or Admin.
+            </p>
+    </div>
     <table id="fl-table" class="fl-table">
+
         <thead>
         <tr>
             <th>Username</th>
             <th>Address</th>
             <th>Email</th>
-            <th>Manage role</th>
+            <th>Make Moderator</th>
         </tr>
         </thead>
         <tbody>

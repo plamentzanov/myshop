@@ -14,6 +14,4 @@ public class AdminController extends BaseController {
     public String getAdminPanel(){
         return "admins/panel";
     }
-
-
 }

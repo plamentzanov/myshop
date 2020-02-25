@@ -87,7 +87,14 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/manage/{id}")
-    public String manageUser(@PathVariable String id) {
+    public ModelAndView manageUser(@PathVariable String id, Model model) {
+        UserServiceModel user = this.userService.getUserById(id);
+        if (user.getAuthorities().size() != 1) {
+            model.addAttribute("error", 1);
+            return super.view("users/users-manager");
+        }
 
+        this.userService.makeModerator(user);
+        return super.redirect("/admins/panel");
     }
 }

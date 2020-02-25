@@ -1,5 +1,6 @@
 package com.myshop.services.services.implementations;
 
+import com.myshop.data.entities.Role;
 import com.myshop.data.entities.User;
 import com.myshop.data.repositories.RoleRepository;
 import com.myshop.data.repositories.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,19 +66,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getUsersRole(String id) {
-        
-    }
-
-
-    @Override
     public List<UserServiceModel> getAllUsers() {
         return this.userRepository.findAll()
                 .stream()
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public UserServiceModel getUserByName(String name) {
@@ -98,6 +93,21 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.findByEmail(model.getEmail());
 
         return user == null;
+    }
+
+    @Override
+    public UserServiceModel getUserById(String id) {
+        return this.modelMapper.map(this.userRepository.findById(id).get(), UserServiceModel.class);
+    }
+
+    @Override
+    public void makeModerator(UserServiceModel user) {
+        Role role = this.roleRepository.findByAuthority("MODERATOR");
+        User userUpdate = this.userRepository.findById(user.getId()).get();
+        Set<Role> authorities = userUpdate.getAuthorities();
+        authorities.add(role);
+        userUpdate.setAuthorities(authorities);
+        this.userRepository.saveAndFlush(userUpdate);
     }
 
 }
