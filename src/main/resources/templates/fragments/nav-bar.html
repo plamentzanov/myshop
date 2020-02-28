@@ -18,7 +18,7 @@
                     <li style="float: left"><a th:href="@{/home}"><span>MyShop</span></a></li>
                     <li style="float: left"><a th:href="@{/products/select-category}"><span>Products</span></a></li>
                     <li style="float: right"><a th:href='@{/logout}'><span>Log Out</span></a></li>
-                    <li style="float: right"><a href='#'><span>Profile</span></a></li>
+                    <li style="float: right"><a th:href='@{/users/profile}'><span>Profile</span></a></li>
                     <th:block sec:authorize="hasAuthority('MODERATOR')">
                         <li style="float: left"><a th:href="@{/admins/panel}"><span>Admin Panel</span></a></li>
                     </th:block>

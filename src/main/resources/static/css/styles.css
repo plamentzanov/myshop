@@ -3,6 +3,22 @@
   background: #756f6f;
   width: 100%;
 }
+
+#profileTable {
+  padding: 25px;
+  width: 70%;
+  text-align: center;
+  margin: auto;
+}
+#profile {
+  width: 40%;
+  padding: 10px;
+  text-align: center;
+  margin: auto;
+}
+fieldset{
+  border-width: 0px;
+}
 #cssmenu ul {
   list-style: none;
   margin: 0;

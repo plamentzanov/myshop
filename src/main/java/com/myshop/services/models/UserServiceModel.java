@@ -1,5 +1,6 @@
 package com.myshop.services.models;
 
+import com.myshop.services.services.GlobalOrderService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,5 +20,5 @@ public class UserServiceModel {
     private String address;
     private List<OrderServiceModel> cart;
     private Set<RoleServiceModel> authorities;
-
+    private List<GlobalOrderServiceModel> orders;
 }

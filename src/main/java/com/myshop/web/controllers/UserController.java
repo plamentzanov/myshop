@@ -2,10 +2,14 @@ package com.myshop.web.controllers;
 
 import com.myshop.services.models.UserServiceModel;
 import com.myshop.services.services.UserService;
+import com.myshop.web.models.UserProfileModel;
 import com.myshop.web.models.UserRegisterModel;
+import com.myshop.web.models.UserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -93,8 +97,15 @@ public class UserController extends BaseController {
             model.addAttribute("error", 1);
             return super.view("users/users-manager");
         }
-
         this.userService.makeModerator(user);
         return super.redirect("/admins/panel");
+    }
+
+    @GetMapping("/profile")
+    public String getProfile(Model model) {
+        Authentication loggedInUser =  SecurityContextHolder.getContext().getAuthentication();
+        UserProfileModel user = this.modelMapper.map(this.userService.getUserByName(loggedInUser.getName()), UserProfileModel.class);
+        model.addAttribute("user", user);
+        return "users/profile";
     }
 }
