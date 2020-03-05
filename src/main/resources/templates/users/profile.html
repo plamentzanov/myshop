@@ -5,42 +5,54 @@
     <th:block th:include="~{fragments/head}"/>
 </head>
 <body>
-<th:block th:include="~{fragments/nav-bar}"></th:block>
-<div id="profile">
-<form th:object="${user}">
-    <fieldset disabled="disabled">
-        <input type="text" th:field="*{username}" />
-        <input type="text" th:field="*{address}"  />
-        <input type="text" th:field="*{email}" />
-    </fieldset>
-</form>
-</div>
-<div id="profileTable">
-    <table id="fl-table" class="fl-table">
-        <thead>
-        <tr>
-            <th>Order Id</th>
-            <th>Order Date</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="info : ${user.orders}" >
-            <td th:text="${info.id}"></td>
-            <td th:text="${info.orderDate}"></td>
-            <th:block th:if="${info.completed == true}">
-                <td><img src="https://img.icons8.com/nolan/64/realtime-protection.png"></td>
-            </th:block>
-            <th:block th:if="${info.completed != true}">
-                <td><img src="https://img.icons8.com/nolan/64/delivery.png"></td>
-            </th:block>
+<div id="page-container">
+    <div id="content-wrap">
+        <th:block th:include="~{fragments/nav-bar}"/>
+        <div id="profile">
+            <form th:object="${user}">
+                <fieldset disabled="disabled">
+                    <input type="text" th:field="*{username}"/>
+                    <input type="text" th:field="*{address}"/>
+                    <input type="text" th:field="*{email}"/>
+                </fieldset>
+            </form>
+        </div>
+        <div id="profileTable">
+            <table id="fl-table" class="fl-table">
+                <thead>
+                <tr>
+                    <th>Order Info</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="info : ${user.orders}">
+                    <td>
+                        <a class="info" href="#">
+                            <strong>Hover me</strong>
+                            <span>
+                        <div th:each="orders : ${info.orders}">
+                            <p th:text="${orders.productName} + ' : ' + ${orders.quantity}"></p>
+                        </div>
+                    </span>
+                        </a>
+                    </td>
+                    <td th:text="${info.orderDate}"></td>
+                    <th:block th:if="${info.completed == true}">
+                        <td><img src="https://img.icons8.com/nolan/64/realtime-protection.png"></td>
+                    </th:block>
+                    <th:block th:if="${info.completed != true}">
+                        <td><img src="https://img.icons8.com/nolan/64/time.png"></td>
+                    </th:block>
 
-        </tr>
-        </tbody>
-    </table>
-</div>
-<footer>
-    <th:block th:include="~{fragments/footer}"></th:block>
-</footer>
+                </tr>
+                </tbody>
+            </table>
+            <footer>
+                <th:block th:include="~{fragments/footer}"/>
+            </footer>
+        </div>
+    </div>
 </body>
 </html>

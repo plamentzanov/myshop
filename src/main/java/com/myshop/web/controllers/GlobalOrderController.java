@@ -29,12 +29,6 @@ public class GlobalOrderController extends BaseController{
         this.archivedOrderService = archivedOrderService;
     }
 
-    @GetMapping("/orders-manager")
-    @PreAuthorize("hasAuthority('MODERATOR')")
-    public String getOrderManager(){
-        return "orders/orders-manager";
-    }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
     public String viewOrder(@PathVariable String id, Model model) {
@@ -49,7 +43,7 @@ public class GlobalOrderController extends BaseController{
         globalOrder.setOrders(this.archivedOrderService.setCompleted(globalOrder.getOrders()));
         globalOrder.setCompleted(true);
         this.globalOrderService.update(globalOrder);
-        return super.redirect("/global-orders/orders-manager");
+        return super.redirect("/admins/orders-manager");
     }
 
     @GetMapping("/decline/{id}")
@@ -59,6 +53,6 @@ public class GlobalOrderController extends BaseController{
         List<ArchivedOrderServiceModel> orders = globalOrder.getOrders();
         this.archivedOrderService.deleteAll(orders);
         this.globalOrderService.deleteById(id);
-        return super.redirect("/global-orders/orders-manager");
+        return super.redirect("/admins/orders-manager");
     }
 }

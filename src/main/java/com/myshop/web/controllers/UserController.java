@@ -84,23 +84,6 @@ public class UserController extends BaseController {
         return super.redirect("users/login");
     }
 
-    @GetMapping("/users-manager")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String getUsersManager(){
-        return "users/users-manager";
-    }
-
-    @GetMapping("/manage/{id}")
-    public ModelAndView manageUser(@PathVariable String id, Model model) {
-        UserServiceModel user = this.userService.getUserById(id);
-        if (user.getAuthorities().size() != 1) {
-            model.addAttribute("error", 1);
-            return super.view("users/users-manager");
-        }
-        this.userService.makeModerator(user);
-        return super.redirect("/admins/panel");
-    }
-
     @GetMapping("/profile")
     public String getProfile(Model model) {
         Authentication loggedInUser =  SecurityContextHolder.getContext().getAuthentication();

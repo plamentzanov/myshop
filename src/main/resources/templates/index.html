@@ -6,25 +6,29 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<header>
-    <th:block th:include="~{fragments/nav-bar}"></th:block>
-</header>
-<div class="Iam">
+<div id="page-container">
+    <div id="content-wrap">
+        <header>
+            <th:block th:include="~{fragments/nav-bar}"/>
+        </header>
+        <div class="Iam">
 
-    <p>Hello!</p>
-    <b>
-        <div class="innerIam">
-            Login<br />
-            or Register<br />
-            to make a<br />
-            order from<br />
-            MyShop.<br />
+            <p>Hello!</p>
+            <b>
+                <div class="innerIam">
+                    Login<br/>
+                    or Register<br/>
+                    to make a<br/>
+                    order from<br/>
+                    MyShop.<br/>
+                </div>
+            </b>
+
         </div>
-    </b>
-
+        <footer>
+            <th:block th:include="~{fragments/footer}"/>
+        </footer>
+    </div>
 </div>
-<footer>
-    <th:block th:include="~{fragments/footer}"></th:block>
-</footer>
 </body>
 </html>

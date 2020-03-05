@@ -9,28 +9,30 @@
 <body>
 <div id="page-container">
     <div id="content-wrap">
-        <th:block th:include="~{fragments/nav-bar}"/>
+        <th:block th:include="~{fragments/admin-nav-bar}"/>
         <div class="table-wrapper">
             <div id="loader"></div>
+            <div th:if="${error} == 1">
+                <p> User is already Moderator or Admin.
+                </p>
+            </div>
             <table id="fl-table" class="fl-table">
                 <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
+                    <th>Username</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Make Moderator</th>
                 </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
-            <div class="button_cont"><a class="example_a" th:href="@{/global-orders/accept/} + ${id}">Accept Order</a>
-            </div>
-            <div class="button_cont"><a class="example_a" th:href="@{/global-orders/decline/} + ${id}">Decline Order</a>
-            </div>
         </div>
         <script>
             $(document).ready(function () {
 
-                var url = "http://localhost:8888/api/global-orders/" + "[[${id}]]";
+                var url = "http://localhost:8888/api/users/all";
 
                 $.getJSON(url, function (data) {
                     var $loading = $('#loader').hide();
@@ -40,8 +42,10 @@
                         });
                     $.each(data, function (index, value) {
                         $('#fl-table tbody').append('<tr class="table-data">' +
-                            '<td>' + value.productName + '</td>' +
-                            '<td>' + value.quantity + '</td>' +
+                            '<td>' + value.username + '</td>' +
+                            '<td>' + value.address + '</td>' +
+                            '<td>' + value.email + '</td>' +
+                            '<td><a href="/admins/manage/' + value.id + '"</a>Click me</td></a>' +
                             '</tr>');
                     })
 

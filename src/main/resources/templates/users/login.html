@@ -2,14 +2,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-<th:block th:include="~{fragments/head}"/>
+    <th:block th:include="~{fragments/head}"/>
 </head>
 <body>
 <div class="wrapper fadeInDown">
+
     <div id="formContent">
         <h2 class="active"> Log in </h2>
-
-
         <form method="POST" th:action="@{/users/login}">
             <input type="text" id="login" class="fadeIn second" name="username"
                    placeholder="username">
@@ -17,7 +16,7 @@
             <input type="password" id="password" class="fadeIn third" name="password"
                    placeholder="password">
             <div>
-            <p th:if="${param.error != null}" class="error">Wrong username or password!</p>
+                <p th:if="${param.error != null}" class="error">Wrong username or password!</p>
             </div>
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
@@ -32,7 +31,7 @@
     </div>
 </div>
 <footer>
-    <th:block th:include="~{fragments/footer}"></th:block>
+    <th:block th:include="~{fragments/footer}"/>
 </footer>
 </body>
 </html>

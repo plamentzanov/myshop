@@ -7,60 +7,64 @@
     <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<th:block th:include="~{fragments/admin-nav-bar}"></th:block>
-<div class="createProduct">
-    <form method="POST" th:action="@{/products/create}" th:object="${product}" enctype="multipart/form-data">
-        <input type="text" th:value="*{name}" id="name" name="name"
-               placeholder="product name">
-        <div th:if="${#fields.hasErrors('${product.name}')}">
-            <p th:each="err : ${#fields.errors('${product.name}')}" th:text="${err}">
-            </p>
-        </div>
-        <input type="text" th:value="*{price}" id="price" name="price"
-               placeholder="price"><br>
-        <div th:if="${#fields.hasErrors('${product.price}')}">
-            <p th:each="err : ${#fields.errors('${product.price}')}" th:text="${err}">
-            </p>
-        </div>
+<div id="page-container">
+    <div id="content-wrap">
+        <th:block th:include="~{fragments/admin-nav-bar}"/>
+        <div class="createProduct">
+            <form method="POST" th:action="@{/products/create}" th:object="${product}" enctype="multipart/form-data">
+                <input type="text" th:value="*{name}" id="name" name="name"
+                       placeholder="product name">
+                <div th:if="${#fields.hasErrors('${product.name}')}">
+                    <p th:each="err : ${#fields.errors('${product.name}')}" th:text="${err}">
+                    </p>
+                </div>
+                <input type="text" th:value="*{price}" id="price" name="price"
+                       placeholder="price"><br>
+                <div th:if="${#fields.hasErrors('${product.price}')}">
+                    <p th:each="err : ${#fields.errors('${product.price}')}" th:text="${err}">
+                    </p>
+                </div>
 
-        <select id="categoryName" th:value="*{categoryName}" name="categoryName" >
-            <option value="" disabled selected>Select category</option>
-        </select>
-        <div  th:if="${#fields.hasErrors('${product.categoryName}')}">
-            <p th:each="err : ${#fields.errors('${product.categoryName}')}" th:text="${err}">
-            </p>
-        </div>
-        <script>
-            $(document).ready(function () {
+                <select id="categoryName" th:value="*{categoryName}" name="categoryName">
+                    <option value="" disabled selected>Select category</option>
+                </select>
+                <div th:if="${#fields.hasErrors('${product.categoryName}')}">
+                    <p th:each="err : ${#fields.errors('${product.categoryName}')}" th:text="${err}">
+                    </p>
+                </div>
+                <script>
+                    $(document).ready(function () {
 
-                var url = "http://localhost:8888/api/categories/all";
+                        var url = "http://localhost:8888/api/categories/all";
 
-                $.getJSON(url, function (data) {
-                    $.each(data, function (index, value) {
-                        $('#categoryName').append('<option >' + value.name + '</option>');
+                        $.getJSON(url, function (data) {
+                            $.each(data, function (index, value) {
+                                $('#categoryName').append('<option >' + value.name + '</option>');
+                            });
+                        });
                     });
-                });
-            });
 
-        </script>
-        <br>
-        <div class="upload-btn-wrapper">
-            <button class="btn">Upload a image</button>
-            <input th:value="*{image}" type="file" name="image"/>
+                </script>
+                <br>
+                <div class="upload-btn-wrapper">
+                    <button class="btn">Upload a image</button>
+                    <input th:value="*{image}" type="file" name="image"/>
+                </div>
+                <div th:if="${#fields.hasErrors('${product.image}')}">
+                    <p th:each="err : ${#fields.errors('${product.image}')}" th:text="${err}">
+                    </p>
+                </div>
+
+                <br>
+                <br>
+
+                <input type="submit" value="Create">
+            </form>
         </div>
-        <div th:if="${#fields.hasErrors('${product.image}')}">
-            <p th:each="err : ${#fields.errors('${product.image}')}" th:text="${err}">
-            </p>
-        </div>
-
-        <br>
-        <br>
-
-        <input type="submit" value="Create">
-    </form>
+        <footer>
+            <th:block th:include="~{fragments/footer}"/>
+        </footer>
+    </div>
 </div>
-<footer>
-    <th:block th:include="~{fragments/footer}"></th:block>
-</footer>
 </body>
 </html>
