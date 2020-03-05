@@ -2,6 +2,7 @@ package com.myshop.web.controllers;
 
 import com.myshop.services.models.UserServiceModel;
 import com.myshop.services.services.UserService;
+import com.myshop.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -24,12 +25,14 @@ public class AdminController extends BaseController {
 
     @GetMapping("/panel")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Admin Panel")
     public String getAdminPanel(){
         return "admins/panel";
     }
 
     @GetMapping("/users-manager")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PageTitle("Users Manager")
     public String getUsersManager(){
         return "admins/users-manager";
     }
@@ -47,6 +50,7 @@ public class AdminController extends BaseController {
 
     @GetMapping("/orders-manager")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Orders Manager")
     public String getOrderManager(){
         return "admins/orders-manager";
     }

@@ -18,7 +18,7 @@
                     <p th:each="err : ${#fields.errors('${product.name}')}" th:text="${err}">
                     </p>
                 </div>
-                <input type="text" th:value="*{price}" id="price" name="price"
+                <input type="number" min="1" th:value="*{price}" id="price" name="price"
                        placeholder="price"><br>
                 <div th:if="${#fields.hasErrors('${product.price}')}">
                     <p th:each="err : ${#fields.errors('${product.price}')}" th:text="${err}">

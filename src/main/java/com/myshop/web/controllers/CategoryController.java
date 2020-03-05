@@ -3,6 +3,7 @@ package com.myshop.web.controllers;
 import com.myshop.services.models.CategoryServiceModel;
 import com.myshop.services.services.CategoryService;
 import com.myshop.services.services.CloudinaryService;
+import com.myshop.web.annotations.PageTitle;
 import com.myshop.web.models.CategoryCreateModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class CategoryController extends BaseController {
 
     @GetMapping("/create")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Create Category")
     public String getCreateCategory(@ModelAttribute("category") CategoryCreateModel model){
         return "categories/create";
     }
@@ -64,12 +66,14 @@ public class CategoryController extends BaseController {
 
     @GetMapping("/all-admin")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("All Categories")
     public String getAllCategories(){
         return "categories/all-admin";
     }
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Edit Category")
     public ModelAndView getEditCategory(@PathVariable String id, Model model){
         CategoryCreateModel category = this.modelMapper.map(this.categoryService.getById(id), CategoryCreateModel.class);
         model.addAttribute("category", category);

@@ -2,6 +2,7 @@ package com.myshop.web.controllers;
 
 import com.myshop.services.models.UserServiceModel;
 import com.myshop.services.services.UserService;
+import com.myshop.web.annotations.PageTitle;
 import com.myshop.web.models.UserProfileModel;
 import com.myshop.web.models.UserRegisterModel;
 import com.myshop.web.models.UserViewModel;
@@ -37,6 +38,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
+    @PageTitle("Login")
     public String getLogin() {
         return "users/login";
     }
@@ -50,6 +52,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
+    @PageTitle("Register")
     public String getRegister(Model model) {
         model.addAttribute("userRegisterModel", new UserRegisterModel());
         return "users/register";
@@ -85,6 +88,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/profile")
+    @PageTitle("Profile")
     public String getProfile(Model model) {
         Authentication loggedInUser =  SecurityContextHolder.getContext().getAuthentication();
         UserProfileModel user = this.modelMapper.map(this.userService.getUserByName(loggedInUser.getName()), UserProfileModel.class);

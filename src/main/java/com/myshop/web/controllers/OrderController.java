@@ -3,6 +3,7 @@ package com.myshop.web.controllers;
 import com.myshop.services.models.OrderServiceModel;
 import com.myshop.services.models.UserServiceModel;
 import com.myshop.services.services.*;
+import com.myshop.web.annotations.PageTitle;
 import com.myshop.web.models.OrderCreateModel;
 import com.myshop.web.models.OrderViewModel;
 import com.myshop.web.models.ProductViewModel;
@@ -54,6 +55,7 @@ public class OrderController extends BaseController{
 
     @GetMapping("/cart")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Cart")
     public ModelAndView getCart(Model model){
        Authentication loggedInUser =  SecurityContextHolder.getContext().getAuthentication();
         List<OrderViewModel> cart = this.ordersService.getCart(loggedInUser.getName())
@@ -79,6 +81,7 @@ public class OrderController extends BaseController{
 
     @GetMapping("/checkout")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Checkout")
     public String getCheckout(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         UserCheckoutModel user = this.modelMapper.map(loggedInUser.getPrincipal(), UserCheckoutModel.class);

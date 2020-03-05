@@ -3,6 +3,7 @@ package com.myshop.web.controllers;
 import com.myshop.services.models.ProductServiceModel;
 import com.myshop.services.services.CloudinaryService;
 import com.myshop.services.services.ProductService;
+import com.myshop.web.annotations.PageTitle;
 import com.myshop.web.models.OrderCreateModel;
 import com.myshop.web.models.ProductCreateModel;
 import com.myshop.web.models.ProductViewModel;
@@ -38,6 +39,7 @@ public class ProductController extends BaseController {
 
     @GetMapping("/create")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Create Product")
     public String getCreateProduct(@ModelAttribute("product") ProductCreateModel model) {
         return "products/create";
     }
@@ -62,12 +64,14 @@ public class ProductController extends BaseController {
 
     @GetMapping("/all-admin")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("All Products")
     public String getAllProductsAdmin() {
         return "products/all-admin";
     }
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Edit Product")
     public ModelAndView getEditProduct(@PathVariable String id, Model model) {
         ProductCreateModel product = this.modelMapper.map(this.productService.getById(id), ProductCreateModel.class);
         model.addAttribute("product", product);
@@ -99,12 +103,14 @@ public class ProductController extends BaseController {
 
     @GetMapping("/select-category")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Categories")
     public String getAllProducts(){
         return "products/all-categories";
     }
 
     @GetMapping("/all/{id}")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Products By Category")
     public String getAllProductsByCategory(@PathVariable String id, Model model){
         List<ProductViewModel> products =  this.productService.getAllByCategoryId(id)
                 .stream()

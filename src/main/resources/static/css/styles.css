@@ -307,6 +307,9 @@ input[type=text] {
   margin: 5px;
   width: 85%;
   border: 2px solid #f6f6f6;
+}
+
+#formContent input[type=text] {
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
