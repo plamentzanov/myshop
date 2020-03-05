@@ -14,12 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admins")
-public class AdminController extends BaseController {
+public class AdminPanelController extends BaseController {
 
     private final UserService userService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminPanelController(UserService userService) {
         this.userService = userService;
     }
 
@@ -53,5 +53,19 @@ public class AdminController extends BaseController {
     @PageTitle("Orders Manager")
     public String getOrderManager(){
         return "admins/orders-manager";
+    }
+
+    @GetMapping("/products-manager")
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Products Manager")
+    public String getAllProductsAdmin() {
+        return "admins/products-manager";
+    }
+
+    @GetMapping("/categories-manager")
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    @PageTitle("Categories Manager")
+    public String getAllCategories(){
+        return "admins/categories-manager";
     }
 }

@@ -61,14 +61,7 @@ public class CategoryController extends BaseController {
         CategoryServiceModel category = this.modelMapper.map(model, CategoryServiceModel.class);
         category.setImageUrl(cloudinaryService.upload(model.getImage()));
         this.categoryService.save(category);
-        return super.redirect("/categories/all-admin");
-    }
-
-    @GetMapping("/all-admin")
-    @PreAuthorize("hasAuthority('MODERATOR')")
-    @PageTitle("All Categories")
-    public String getAllCategories(){
-        return "categories/all-admin";
+        return super.redirect("/admins/categories-manager");
     }
 
     @GetMapping("/edit/{id}")
@@ -100,7 +93,7 @@ public class CategoryController extends BaseController {
             category.setImageUrl(this.cloudinaryService.upload(model.getImage()));
         }
         this.categoryService.update(category, id);
-        return super.redirect("/categories/all-admin");
+        return super.redirect("/admins/categories-manager");
     }
 
     @PostMapping("/delete/{id}")
@@ -108,10 +101,10 @@ public class CategoryController extends BaseController {
         CategoryServiceModel category = this.categoryService.getById(id);
         if (!category.getProducts().isEmpty()) {
             model.addAttribute("notEmpty",true);
-            return super.view("categories/all-admin");
+            return super.view("admins/categories-manager");
         }
         this.categoryService.delete(id);
-        return super.redirect("/categories/all-admin");
+        return super.redirect("/admins/categories-manager");
     }
 
 }

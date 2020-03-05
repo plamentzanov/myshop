@@ -59,15 +59,9 @@ public class ProductController extends BaseController {
         ProductServiceModel product = this.modelMapper.map(model, ProductServiceModel.class);
         product.setImageUrl(this.cloudinaryService.upload(model.getImage()));
         this.productService.add(product);
-        return super.redirect("/products/all-admin");
+        return super.redirect("/admins/products-manager");
     }
 
-    @GetMapping("/all-admin")
-    @PreAuthorize("hasAuthority('MODERATOR')")
-    @PageTitle("All Products")
-    public String getAllProductsAdmin() {
-        return "products/all-admin";
-    }
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
@@ -91,14 +85,14 @@ public class ProductController extends BaseController {
             product.setImageUrl(this.cloudinaryService.upload(model.getImage()));
         }
         this.productService.update(product, id);
-        return super.redirect("/products/all-admin");
+        return super.redirect("/admins/products-manager");
     }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
     public ModelAndView deleteProduct(@PathVariable String id) {
         this.productService.delete(id);
-        return super.redirect("/products/all-admin");
+        return super.redirect("/admins/products-manager");
     }
 
     @GetMapping("/select-category")
