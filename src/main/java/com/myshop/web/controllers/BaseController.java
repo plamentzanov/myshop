@@ -1,5 +1,7 @@
 package com.myshop.web.controllers;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
 public abstract class BaseController {

@@ -62,7 +62,6 @@ public class ProductController extends BaseController {
         return super.redirect("/admins/products-manager");
     }
 
-
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
     @PageTitle("Edit Product")
